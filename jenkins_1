@@ -1,0 +1,13 @@
+#!/bin/bash
+
+yum -y install nginx
+yum -y install git
+yum -y install java-1.8.0-openjdk-devel
+
+sed -i ':a;$!{N;ba};s/location \/ {/location \/ { proxy_pass http:\/\/10.0.0.10:8080\/;/' /etc/nginx/nginx.conf
+
+export JENKINS_HOME=/vagrant/.jenkins/
+java -jar /vagrant/jenkins.war
+
+systemctl start nginx
+
